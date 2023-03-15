@@ -1,0 +1,54 @@
+import PySimpleGUI as sg
+from time import sleep
+
+# Define o layout da janela
+layout = [
+    [sg.Text('Digite o comprimento do tecido em metros:')],
+    [sg.Input(key='-COMPRIMENTO-')],
+    [sg.Button('Calcular')],
+    [sg.Text('')],
+    [sg.Text('Resultado:', font=('Helvetica', 14))],
+    [sg.Output(size=(60,10))]
+]
+
+# Cria a janela
+window = sg.Window('Calculadora de lençóis', layout)
+
+# Loop principal da janela
+while True:
+    event, values = window.read()
+
+    # Verifica se o usuário clicou no botão Calcular
+    if event == 'Calcular':
+        l = float(values['-COMPRIMENTO-'])
+        print('-='*18)
+        medida = l
+
+        # Realiza o cálculo dos tamanhos de lençóis possíveis
+        print('o tecido tem (COMPRIMENTO x LARGURA): {}m x 2.5m'.format(l))
+        print('-='*18)
+        if medida < 1.60:
+            print('ESSE TECIDO NÃO DÁ PARA FAZER LENÇOL!, tente fronhas!')
+        elif medida >= 1.60 and medida < 2.20:
+            med = int(medida/1.60)
+            print('Tecido ideal para lençol de SOLTEIRO.\n','Pode fazer',med,'Peça(s).')
+        elif medida >= 2.20 and medida < 2.40 :
+            med = int(medida/2.20)
+            print (f'\n','Pode fazer',med,'Peça(s) de lençol de CASAL, ou,\n pode fazer',int(medida/1.60),'peça(s) de lençol de solteiro.')
+        elif medida >= 2.40 and medida <2.90:
+            med = int(medida/2.40)
+            print('\n','Pode fazer',med,'Peça(s) de lençol Tipo QUEEN, ou,\n pode fazer',int(medida/2.20),'peça(s) de lençol de casal, ou,\n pode fazer',int(medida/1.60),'peça(s) de lençol de solteiro.')
+        else:
+            med = int(medida/2.90)
+            print('\n','Pode fazer',med,'Peça(s) de lençol Tipo KING, ou,\n pode fazer',int(medida/2.40),'peça(s) de lençol Tipo QUEEN, ou,\n pode fazer',int(medida/2.20),'peça(s) de lençol de casal, ou,\n pode fazer',int(medida/1.60),'peça(s) de lençol de solteiro.')
+
+        # Espera 2400 segundos antes de limpar a saída
+        sleep(2400)
+        print('')
+        
+    # Verifica se o usuário fechou a janela
+    if event == sg.WIN_CLOSED:
+        break
+
+# Fecha a janela
+window.close()
